@@ -7,7 +7,7 @@ import BoardSelector from './boardselector';
 
 const Navbar = () => {
     return (
-        <Toolbar sx={{bgcolor: "#6cd970", position: "static"}}>
+        <Toolbar sx={{bgcolor: "#6cd970", position: "static", width: "100%"}}>
             <Box display='flex' flexGrow={1}>
                 <img src="/img/cytisum-logo-lg-white.png" width="200" height="80" alt="logo" />
             </Box>
