@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Navbar from './components/navbar';
+import ThreadContainer from './components/threadContainer';
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
 
