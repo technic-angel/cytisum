@@ -3,7 +3,7 @@
 import React from 'react';
 import Toolbar from '@mui/material/Toolbar';
 import Box from '@mui/material/Box';
-import BoardSelector from './boardselector';
+import BoardSelector from './boardSelector';
 
 const Navbar = () => {
     return (

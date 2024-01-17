@@ -1,12 +1,12 @@
 import Image from 'next/image'
-import Navbar from './components/navbar';
+import Navbar from './components/navBar';
 import ThreadContainer from './components/threadContainer';
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
 
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
-import ThreadGallery from './components/threadgallery';
+import ThreadGallery from './components/threadGallery';
 
 export default function Home() {
   return (

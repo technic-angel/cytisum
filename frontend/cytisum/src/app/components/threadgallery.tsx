@@ -64,9 +64,9 @@ const popularImages = [
 
 const ThreadGallery = () => {
     return (
-    <ImageList cols={7} rowHeight={7} sx={{height: "100%"}}>
+    <ImageList cols={7} rowHeight={164} sx={{height: "100%", alignContent:"start"}}>
         {popularImages.map((item) => (
-          <ImageListItem key={item.img}>
+          <ImageListItem key={item.img} sx={{height: "164px", alignContent:"start"}}>
             <img
               srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
               src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
