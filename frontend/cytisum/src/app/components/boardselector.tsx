@@ -13,7 +13,7 @@ export default function BoardSelector() {
           id="boardSelector"
           //     this is bothering me. -A
           //              v
-          options={boards[0].map((option) => (option.title) )}
+          options={boards["boards"].map((option) => (option.title) )}
           renderInput={(params) => <TextField {...params} label="Boards" />}
         />
       </Stack>

@@ -4,6 +4,9 @@ import React from 'react'
 
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
+import ImageListItemBar from '@mui/material/ImageListItemBar';
+import threads from '../placeholder_data/placeholder_data';
+import { useState } from 'react';
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -63,17 +66,36 @@ const popularImages = [
 ];
 
 const ThreadGallery = () => {
+  const [previewThread, setPreviewThread] = useState(false);
+  const [focusedThread, setFocusedThread] = useState(0);
+
     return (
     <ImageList cols={7} rowHeight={164} sx={{height: "100%", alignContent:"start"}}>
-        {popularImages.map((item) => (
-          <ImageListItem key={item.img} sx={{height: "164px", alignContent:"start"}}>
+        {threads["threads"].map((thread, index) => (
+          <ImageListItem 
+            key={index} 
+            sx={{height: "164px", alignContent:"start"}}
+            onMouseEnter={() => {
+                setPreviewThread(true)
+                setFocusedThread(thread.no)
+              }}
+            onMouseLeave={() => {
+                setPreviewThread(false)
+                setFocusedThread(-1)
+              }}
+            >
             <img
-              srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-              src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-              alt={item.title}
+              srcSet={`${popularImages[index % popularImages.length]}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+              src={`${popularImages[index % popularImages.length].img}?w=164&h=164&fit=crop&auto=format`}
+              alt={thread.sub}
               loading="lazy"
               height="164px"
               width="164px"
+            />
+            <ImageListItemBar
+              title={thread.sub}
+              subtitle={thread.com}
+              sx={focusedThread == thread.no ? {opacity: "100%"} : {opacity: "0%"}}
             />
           </ImageListItem>
         ))}
