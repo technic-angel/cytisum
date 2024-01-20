@@ -6,6 +6,7 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import threads from '../placeholder_data/placeholder_data';
+import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 
 import '@fontsource/roboto/300.css';
@@ -73,7 +74,7 @@ const ThreadGallery = () => {
         {threads["threads"].map((thread, index) => (
           <ImageListItem 
             key={index} 
-            sx={{height: "164px", alignContent:"start"}}
+            sx={{height: "164px", width: "164px", alignContent:"start"}}
             onMouseEnter={() => {
                 setFocusedThread(thread.no)
               }}
@@ -89,11 +90,14 @@ const ThreadGallery = () => {
               height="164px"
               width="164px"
             />
-            <ImageListItemBar
-              title={thread.sub}
-              subtitle={thread.com}
-              sx={focusedThread == thread.no ? {opacity: "100%"} : {opacity: "0%"}}
-            />
+            <div style={focusedThread == thread.no ? {marginTop: "-164px", height: "164px", width: "164px", opacity: "100%", backgroundColor: "rgba(160, 160, 160, .6)"} : {opacity: "0%"}} >
+              <Typography noWrap variant="h6">
+                {thread.sub}
+              </Typography>
+              <Typography variant="body2" sx={{display: "-webkit-box", overflow: "hidden", WebkitBoxOrient: "vertical", WebkitLineClamp: thread.sub == null ? 8 : 6}}>
+                {thread.com}
+              </Typography>
+            </div>
           </ImageListItem>
         ))}
       </ImageList>
