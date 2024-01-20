@@ -66,7 +66,6 @@ const popularImages = [
 ];
 
 const ThreadGallery = () => {
-  const [previewThread, setPreviewThread] = useState(false);
   const [focusedThread, setFocusedThread] = useState(0);
 
     return (
@@ -76,11 +75,9 @@ const ThreadGallery = () => {
             key={index} 
             sx={{height: "164px", alignContent:"start"}}
             onMouseEnter={() => {
-                setPreviewThread(true)
                 setFocusedThread(thread.no)
               }}
             onMouseLeave={() => {
-                setPreviewThread(false)
                 setFocusedThread(-1)
               }}
             >
