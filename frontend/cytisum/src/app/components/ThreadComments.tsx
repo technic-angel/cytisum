@@ -17,7 +17,7 @@ const ThreadComments = () => {
                 (
                     
                     <div style={{padding: "10px"}}>
-                        <Post post={post}/>
+                        <Post Post={post}/>
                         {/* <p>{post.no}</p>
                         <p>{post.sub}</p>
                         <p>{post.com}</p> */}

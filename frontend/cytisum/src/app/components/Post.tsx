@@ -5,8 +5,8 @@ import { Box } from "@mui/system";
 import  Models from "../../interfaces/chan_interface"
 
 
-const Post = (props: any) => {
-  const { post } = props;
+const Post = (props: {Post: Models.Post}) => {
+  const { com, now, no, name, sub } = props.Post;
   return (
     <Card>
         <Box sx={{ p: "15px" }}>
@@ -22,18 +22,18 @@ const Post = (props: any) => {
                   {/* <Avatar src={ava}></Avatar> */}
                   {/* User name */}
                   <Typography fontWeight="bold" sx={{ color: "neutral.darkRed" }}>
-                    {props.post.sub}
+                    {sub}
                   </Typography>
                   <Typography fontWeight="bold" sx={{ color: "neutral.darkBlue" }}>
-                    {props.post.name}
+                    {name}
                   </Typography>
-                  <Typography sx={{ color: "neutral.grayishBlue" }}>{props.post.now}</Typography>
+                  <Typography sx={{ color: "neutral.grayishBlue" }}>{now}</Typography>
                   <Typography fontWeight="bold" sx={{ color: "neutral.darkBlue" }}>
-                    No. {props.post.no}
+                    No. {no}
                   </Typography>
                 </Stack>
             </Stack>
-              {props.post.com}
+              {com}
             </Box>
           </Stack>
         </Box>
