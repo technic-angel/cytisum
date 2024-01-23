@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-
+import ThreadComments from './ThreadComments';
 
 
 const ThreadContainer = () => {
@@ -24,6 +24,8 @@ const ThreadContainer = () => {
         border: '2px solid #000',
         boxShadow: 15,
         p: 4,
+        display:"flex",
+        justifyContent: "space-around"
       };
 
     const [open, setOpen] = useState<boolean>(false);
@@ -44,12 +46,12 @@ const ThreadContainer = () => {
             aria-describedby="modal-modal-description"
         >
             <Box sx={style}>
-                <Typography id="modal-modal-title" variant="h6" component="h2">
-                Text in a modal
-                </Typography>
-                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                </Typography>
+                <div style={{width:"50%", height:"100%",  border:"solid black 2px"}}>
+
+                </div>
+                <div style={{width:"50%", height:"100%",  border:"solid black 2px", overflow: "scroll"}}>
+                    <ThreadComments />
+                </div>
             </Box>
         </Modal>
       </div>

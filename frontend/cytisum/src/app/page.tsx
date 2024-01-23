@@ -17,6 +17,7 @@ export default function Home() {
         </Container>
       </CssBaseline>
       <Container sx={{height: "1200px"}}>
+        <ThreadContainer />
         <ThreadGallery />
       </Container>
     </main>
