@@ -10,8 +10,6 @@ namespace Models {
     filenames: string[]; // gallery image source
     timestamp: number;
     reply: number; // 0 if OP
-    country: string;
-    country_name: string;
     board: string;
     replies: number;
     images: number;
@@ -36,9 +34,7 @@ namespace Models {
   export interface Board {
     board: string;
     title: string;
-    ws_board: number;
-    per_page: number;
-    pages: number;
+    ws_board: boolean;
     max_filesize: number;
     max_comment_chars: number;
     bump_limit: number;
