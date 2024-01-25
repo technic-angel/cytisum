@@ -7,6 +7,25 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Post {
+  number      Int      @id @default(autoincrement())
+  datetime    String   @db.VarChar(255)
+  name        String   @db.VarChar(30)
+  subject     String?  @db.VarChar(127)
+  comment     String?  @db.VarChar(1200)
+  filenames   String[]
+  timestamp   Int
+  reply       Post?    @relation(fields: [replyId], references: [number])
+  replyId     Int?     @db.ObjectId
+  board       String   @db.VarChar(8)
+  replies     Int      @default(0)
+  images      Int      @default(0)
+  sticky      Boolean  @default(false)
+  closed      Boolean  @default(false)
+  bumplimit   Boolean  @default(true)
+  archived    Boolean  @default(false)
+}
+
 model tutorials {
   id          Int      @id @default(autoincrement())
   title       String?  @db.VarChar(255)
