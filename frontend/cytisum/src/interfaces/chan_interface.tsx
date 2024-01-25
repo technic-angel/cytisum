@@ -80,11 +80,15 @@ namespace Models {
     name: string;
     pass: string;
     email: string;
+    emailVerified: string;
     avatar: string;
+    createdAt: string;
+    uploadedAt: string;
     birthday: string;
     banned: number; // days of ban; -1 = perma, 0 = unbanned
     mod: string[]; // boards with mod privs
     admin: boolean;
+    posts: number
     flags?: string[]; // country/other flags here if we still want them? 
   }
 
