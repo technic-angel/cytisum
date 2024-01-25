@@ -98,7 +98,6 @@ namespace Models {
     replies: number;
   }
 
-
   export interface ThreadList {
     page: number;
     threads: ThreadListItem[]
