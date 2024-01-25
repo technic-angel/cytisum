@@ -1,3 +1,5 @@
+"use client"
+
 import { faker } from '@faker-js/faker'
 import Models from '../../interfaces/chan_interface'
 
@@ -55,13 +57,13 @@ const boards = [
         category: "Hobbies & Crafts"
     }
 ]
-
 export function createRandomPost(replyTo?: number): Models.Post {
     const date = faker.date.past(); 
     return {
         number: faker.number.int(),
         datetime: date.toDateString(),
         name: faker.internet.userName(),
+        comment: faker.lorem.paragraph(),
         subject: faker.internet.domainWord(),
         filenames: faker.helpers.multiple(faker.image.urlPicsumPhotos, {count: faker.number.int() % 5}), // up to 5 images
         timestamp: Math.floor(date.getTime() / 1000), // conversion to unix seconds

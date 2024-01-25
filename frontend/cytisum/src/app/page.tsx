@@ -1,3 +1,5 @@
+"use client"
+
 import Navbar from './components/navBar';
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -5,6 +7,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import ThreadGallery from './components/thread/threadGallery';
 import { Provider } from 'react-redux';
 import store from './store';
+import ThreadContainer from './components/thread/threadContainer';
 
 export default function Home() {
   return (
@@ -18,6 +21,7 @@ export default function Home() {
         <Container sx={{height: "1200px"}}>
           <ThreadGallery />
         </Container>
+        <ThreadContainer />
       </main>
     </Provider>
   )

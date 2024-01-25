@@ -1,20 +1,19 @@
 "use client";
 
-import React, {useState} from 'react'
+import React, { useReducer } from 'react'
 
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { Provider, connect } from 'react-redux';
-import interfaceStore from '../../store';
+import { connect, useDispatch, useSelector } from 'react-redux';
+import { 
+    ThreadState,
+    closeThread,
+ } from './threadSlice';
 
-interface ThreadContainerProps {
-    open: boolean,
-    threadNumber: string
-}
+ import threads from '../../placeholder_data/placeholder_data'
 
-const ThreadContainer = (props: ThreadContainerProps) => {
+const ThreadContainer = () => {
     const style = {
         position: 'absolute' as 'absolute',
         top: '50%',
@@ -28,40 +27,46 @@ const ThreadContainer = (props: ThreadContainerProps) => {
         p: 4,
       };
 
-    const handleOpen = () => props.open = true;
-    const handleClose = () => props.open = false;
-
+    const dispatch = useDispatch();
+    const threadNumber = useSelector((state: any) => state.thread.threadNumber);
+    const visible = useSelector((state: any) => state.thread.open);
+    const [, forceUpdate] = useReducer(x => x + 1, 0);
+    const post = threads.threads.find((thread) => thread.number == threadNumber);
+    if (post === undefined) {
+        dispatch(closeThread());
+        console.log("Could not find post " + threadNumber);
+        return (null);
+    }
+    console.log(visible)
     return (
         <div>
-            <Provider store={interfaceStore}>
-                <Button onClick={handleOpen}> 
-                    Thread Popup Place Holder
-                </Button>
-                <Modal
-                    open={props.open}
-                    onClose={handleClose}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                >
-                    <Box sx={style}>
-                        <Typography id="modal-modal-title" variant="h6" component="h2">
-                        Text in a modal
-                        </Typography>
-                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                        </Typography>
-                </Box>
-                </Modal>
-            </Provider>
+            <Modal
+                open={visible}
+                onClose={ () => {
+                    dispatch(closeThread());
+                    forceUpdate();
+                }}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
+                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                        {post.subject}
+                    </Typography>
+                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                        {post.comment}
+                    </Typography>
+            </Box>
+            </Modal>
         </div>
-    )
+        )
 }
 
-function mapStateToProps(state : any) {
-    const { s } = state;
+export function mapStateToProps(state : ThreadState) {
+    const s = state;
     return {
-        showThreadContainer: s.showThreadContainer,
-        focusedThread: s.focusedThread
+        open: s.open,
+        threadNumber: s.threadNumber
     }
 }
 

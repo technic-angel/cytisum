@@ -1,24 +1,20 @@
 "use client";
 
-import React, { StrictMode } from 'react'
+import React, { useEffect, useReducer } from 'react'
 
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import threads from '../../placeholder_data/placeholder_data';
 import Typography from '@mui/material/Typography';
-import { useState, createContext, useContext } from 'react';
-import store from '@/app/store';
-import { useDispatch, useSelector } from 'react-redux';
+import { useContext } from 'react';
+import { useDispatch, useSelector, connect } from 'react-redux';
 import {
-  setFocusedThread,
-  showContainer,
-  hideContainer,
-  selectFocusedThread,
-  selectVisible
+  setThreadNumber,
+  openThread
 } from './threadSlice'
-import { Provider, ReactReduxContext } from 'react-redux';
-
+import { ThreadState } from './threadSlice';
+import { mapStateToProps } from './threadContainer'
 import { threadContext } from './threadContext';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -77,53 +73,56 @@ const popularImages = [
   },
 ];
 const ThreadGallery = () => {
-  const context = useContext(threadContext)
   const dispatch = useDispatch()
-  const visible = useSelector(selectVisible)
-  const focusedThread = useSelector(selectFocusedThread)
+  const visible = useSelector((state: any) => state.thread.open)
+  const focusedThread = useSelector((state: any) => state.thread.threadNumber)
+  const [, forceUpdate] = useReducer(x => x + 1, 0);
+
     return (
-      <StrictMode>
-        <Provider store={store}>
-          <ImageList cols={7} rowHeight={164} sx={{height: "100%", alignContent:"start"}}>
-              {threads["threads"].map((thread, index) => (
-                <ImageListItem 
-                  key={index} 
-                  sx={{height: "164px", width: "164px", alignContent:"start"}}
-                  onMouseEnter={() => {
-                      if (!visible)
-                        dispatch(setFocusedThread(thread.number))
-                    }}
-                  onMouseLeave={() => {
-                      if (!visible)
-                        dispatch(setFocusedThread(-1))
-                    }}
-                  onClick={() => {
-                      if (!visible)
-                        dispatch(showContainer())
-                    }}
-                  >
-                  <img
-                    srcSet={`${popularImages[index % popularImages.length]}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                    src={`${popularImages[index % popularImages.length].img}?w=164&h=164&fit=crop&auto=format`}
-                    alt={thread.subject}
-                    loading="lazy"
-                    height="164px"
-                    width="164px"
-                  />
-                  <div style={focusedThread == thread.number ? {marginTop: "-164px", height: "164px", width: "164px", opacity: "100%", backgroundColor: "rgba(160, 160, 160, .6)"} : {opacity: "0%"}} >
-                    <Typography noWrap variant="h6">
-                      {thread.subject}
-                    </Typography>
-                    <Typography variant="body2" sx={{display: "-webkit-box", overflow: "hidden", WebkitBoxOrient: "vertical", WebkitLineClamp: thread.subject == null ? 8 : 6}}>
-                      {thread.comment}
-                    </Typography>
-                  </div>
-                </ImageListItem>
-              ))}
-            </ImageList>
-        </Provider>
-      </StrictMode>
+      <ImageList cols={7} rowHeight={164} sx={{height: "100%", alignContent:"start"}}>
+          {threads["threads"].map((thread, index) => (
+            <ImageListItem 
+              key={index} 
+              sx={{height: "164px", width: "164px", alignContent:"start"}}
+              onMouseEnter={() => {
+                  if (!visible) {
+                    dispatch(setThreadNumber(thread.number))
+                    forceUpdate()
+                  }
+                }}
+              onMouseLeave={() => {
+                  if (!visible) {
+                    dispatch(setThreadNumber(-1))
+                    forceUpdate()
+                  }
+                }}
+              onClick={() => {
+                  if (!visible) {
+                    dispatch(openThread())
+                    forceUpdate()
+                  }
+                }}
+              >
+              <img
+                srcSet={`${popularImages[index % popularImages.length]}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                src={`${popularImages[index % popularImages.length].img}?w=164&h=164&fit=crop&auto=format`}
+                alt={thread.subject}
+                loading="lazy"
+                height="164px"
+                width="164px"
+              />
+              <div style={focusedThread == thread.number ? {marginTop: "-164px", height: "164px", width: "164px", opacity: "100%", backgroundColor: "rgba(160, 160, 160, .6)"} : {opacity: "0%"}} >
+                <Typography noWrap variant="h6">
+                  {thread.subject}
+                </Typography>
+                <Typography variant="body2" sx={{display: "-webkit-box", overflow: "hidden", WebkitBoxOrient: "vertical", WebkitLineClamp: thread.subject == null ? 8 : 6}}>
+                  {thread.comment}
+                </Typography>
+              </div>
+            </ImageListItem>
+          ))}
+        </ImageList>
     )
 }
 
-export default ThreadGallery;
+export default connect(mapStateToProps)(ThreadGallery);

@@ -1,4 +1,6 @@
+"use client"
+
 import { createContext } from "react";
-import { initialState } from "./threadReducer";
+import { initialState } from "./threadSlice";
 
 export const threadContext = createContext(initialState);
