@@ -50,7 +50,7 @@ const ThreadGallery = () => {
                 }}
               >
               <Image
-                src = {thread.filenames.length > 0 ? thread.filenames[0] : ""}
+                src = {thread.filenames.length > 0 ? thread.filenames[0] : '/img/unknown.png'}
                 alt = {""}
                 fill = {true}
                 style = {{marginTop: "-164px"}}
