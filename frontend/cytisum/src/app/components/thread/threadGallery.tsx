@@ -2,76 +2,22 @@
 
 import React, { useEffect, useReducer } from 'react'
 
+import Image from 'next/image'
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
-import ImageListItemBar from '@mui/material/ImageListItemBar';
 import threads from '../../placeholder_data/placeholder_data';
 import Typography from '@mui/material/Typography';
-import { useContext } from 'react';
 import { useDispatch, useSelector, connect } from 'react-redux';
 import {
   setThreadNumber,
   openThread
 } from './threadSlice'
-import { ThreadState } from './threadSlice';
 import { mapStateToProps } from './threadContainer'
-import { threadContext } from './threadContext';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
-
-const popularImages = [
-  {
-    img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
-    title: 'Breakfast',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
-    title: 'Burger',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
-    title: 'Camera',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
-    title: 'Coffee',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1533827432537-70133748f5c8',
-    title: 'Hats',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62',
-    title: 'Honey',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6',
-    title: 'Basketball',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1518756131217-31eb79b20e8f',
-    title: 'Fern',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1597645587822-e99fa5d45d25',
-    title: 'Mushrooms',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1567306301408-9b74779a11af',
-    title: 'Tomato basil',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1471357674240-e1a485acb3e1',
-    title: 'Sea star',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
-    title: 'Bike',
-  },
-];
 const ThreadGallery = () => {
   const dispatch = useDispatch()
   const visible = useSelector((state: any) => state.thread.open)
@@ -79,7 +25,7 @@ const ThreadGallery = () => {
   const [, forceUpdate] = useReducer(x => x + 1, 0);
 
     return (
-      <ImageList cols={7} rowHeight={164} sx={{height: "100%", alignContent:"start"}}>
+      <ImageList cols={7} rowHeight={164} sx={{height: "70%", alignContent:"start"}}>
           {threads["threads"].map((thread, index) => (
             <ImageListItem 
               key={index} 
@@ -103,19 +49,17 @@ const ThreadGallery = () => {
                   }
                 }}
               >
-              <img
-                srcSet={`${popularImages[index % popularImages.length]}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                src={`${popularImages[index % popularImages.length].img}?w=164&h=164&fit=crop&auto=format`}
-                alt={thread.subject}
-                loading="lazy"
-                height="164px"
-                width="164px"
+              <Image
+                src = {thread.filenames.length > 0 ? thread.filenames[0] : ""}
+                alt = {""}
+                fill = {true}
+                style = {{marginTop: "-164px"}}
               />
-              <div style={focusedThread == thread.number ? {marginTop: "-164px", height: "164px", width: "164px", opacity: "100%", backgroundColor: "rgba(160, 160, 160, .6)"} : {opacity: "0%"}} >
-                <Typography noWrap variant="h6">
+              <div style={focusedThread == thread.number ? {marginTop: "-164px", height: "164px", width: "164px", opacity: "100%", backgroundColor: "rgba(160, 160, 160, .6)", zIndex: 99} : {opacity: "0%"}} >
+                <Typography noWrap variant="h6" sx={{userSelect: "none"}}>
                   {thread.subject}
                 </Typography>
-                <Typography variant="body2" sx={{display: "-webkit-box", overflow: "hidden", WebkitBoxOrient: "vertical", WebkitLineClamp: thread.subject == null ? 8 : 6}}>
+                <Typography variant="body2" sx={{display: "-webkit-box", overflow: "hidden", WebkitBoxOrient: "vertical", WebkitLineClamp: thread.subject == null ? 8 : 6, userSelect: 'none'}}>
                   {thread.comment}
                 </Typography>
               </div>
