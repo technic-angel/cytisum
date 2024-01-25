@@ -26,11 +26,19 @@ model Post {
   archived    Boolean  @default(false)
 }
 
-model tutorials {
-  id          Int      @id @default(autoincrement())
-  title       String?  @db.VarChar(255)
-  description String?  @db.VarChar(255)
-  published   Boolean?
-  createdAt   DateTime @db.Timestamptz(6)
-  updatedAt   DateTime @db.Timestamptz(6)
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  pass          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  avatar        String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  birthday      DateTime
+  banned        Int       @default(0)
+  mod           String[]?
+  admin         Boolean   @default(false)
+  posts         Int       @default(0)
+  flags         String[]?
 }

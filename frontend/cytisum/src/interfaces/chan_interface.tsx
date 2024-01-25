@@ -76,7 +76,7 @@ namespace Models {
   }
 
   export interface User {
-    id: number;
+    id: string;
     name: string;
     pass: string;
     email: string;
