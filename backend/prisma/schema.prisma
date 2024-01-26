@@ -8,22 +8,22 @@ datasource db {
 }
 
 model Post {
-  number      Int      @id @default(autoincrement())
-  datetime    String   @db.VarChar(255)
-  name        String   @db.VarChar(30)
-  subject     String?  @db.VarChar(127)
-  comment     String?  @db.VarChar(1200)
-  filenames   String[]
-  timestamp   Int
-  reply       Post?    @relation(fields: [replyId], references: [number])
-  replyId     Int?     @db.ObjectId
-  board       String   @db.VarChar(8)
-  replies     Int      @default(0)
-  images      Int      @default(0)
-  sticky      Boolean  @default(false)
-  closed      Boolean  @default(false)
-  bumplimit   Boolean  @default(true)
-  archived    Boolean  @default(false)
+  number    Int      @id @default(autoincrement())
+  datetime  String   @db.VarChar(255)
+  name      String   @db.VarChar(30)
+  subject   String?  @db.VarChar(127)
+  comment   String?  @db.VarChar(1200)
+  filenames String[]
+  timestamp Int
+  replyId   Int?
+  reply     Post?    @relation("ReplyToPost", fields: [replyId], references: [number])
+  board     String   @db.VarChar(8)
+  replies   Post[]   @relation("ReplyToPost")
+  images    Int      @default(0)
+  sticky    Boolean  @default(false)
+  closed    Boolean  @default(false)
+  bumplimit Boolean  @default(true)
+  archived  Boolean  @default(false)
 }
 
 model User {
@@ -37,8 +37,8 @@ model User {
   updatedAt     DateTime  @updatedAt
   birthday      DateTime
   banned        Int       @default(0)
-  mod           String[]?
+  mod           String[]
   admin         Boolean   @default(false)
   posts         Int       @default(0)
-  flags         String[]?
+  flags         String[]
 }
