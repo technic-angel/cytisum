@@ -10,7 +10,8 @@ import Typography from '@mui/material/Typography';
 import { useDispatch, useSelector, connect } from 'react-redux';
 import {
   setThreadNumber,
-  openThread
+  openThread,
+  ThreadState
 } from './threadSlice'
 import { mapStateToProps } from './threadContainer'
 import '@fontsource/roboto/300.css';
@@ -20,7 +21,7 @@ import '@fontsource/roboto/700.css';
 
 const ThreadGallery = () => {
   const dispatch = useDispatch()
-  const visible = useSelector((state: any) => state.thread.open)
+  const visible = useSelector((state: any) => state.thread.threadViewerOpen)
   const focusedThread = useSelector((state: any) => state.thread.threadNumber)
   const [, forceUpdate] = useReducer(x => x + 1, 0);
 
