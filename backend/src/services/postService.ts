@@ -15,6 +15,7 @@ export class PostService {
 
     async createNewPost(post: any): Promise<any>{
         //time stamp is too small
+        
         try{
             const newPost = await this.prisma.post.create({
                 data:{
