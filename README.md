@@ -7,7 +7,7 @@ Cytisum is a platform designed around the sharing and discussion of images, loos
 * A valid Cloudinary account and preset for image hosting
 
 ## Frontend build instructions
-In order for the server to function, you *must* have a properly configured `.env` file in the `backend` directory. An example is provided below.
+In order for the server to function, you *must* have a properly configured `.env` file in the `frontend/cytisum` directory. An example is provided below.
 
 ```
 NEXT_PUBLIC_CLOUDINARY_NAME='******'
