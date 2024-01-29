@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { useSelector } from 'react-redux'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
 export interface ThreadState {
@@ -36,8 +35,6 @@ const readBlob = (file: File, chunkSize: number) => {
 }
 
 const chunkUpload = (file: File, index: number, chunkSize: number, upload: any, totalFileSize: number) => {
-  var reader = new FileReader();
-
   const start = index * chunkSize;
   const stop = start + chunkSize < totalFileSize ? start + chunkSize : totalFileSize;
   const blob = file.slice(start, stop);
@@ -46,15 +43,10 @@ const chunkUpload = (file: File, index: number, chunkSize: number, upload: any, 
 
 
 async function upload(blob: string, start: number, stop: number, totalFileSize: number) {
-  const timestamp = 1590947575
   const contentRange = `bytes ${start}-${stop}/${totalFileSize}`
-    var name: string = process.env.NEXT_PUBLIC_CLOUDINARY_NAME!;
-    var preset: string = process.env.NEXT_PUBLIC_CLOUDINARY_PRESET!;
+  var name: string = process.env.NEXT_PUBLIC_CLOUDINARY_NAME!;
+  var preset: string = process.env.NEXT_PUBLIC_CLOUDINARY_PRESET!;
 
-  const headers = {
-    "X-Unique-Upload-Id": timestamp,
-    "Content-Range": `${contentRange}`,
-  }
   var form_data = new FormData();
   form_data.append("file", blob);
   form_data.append("upload_preset", preset);
@@ -77,8 +69,6 @@ async function upload(blob: string, start: number, stop: number, totalFileSize: 
 
 
 export const useUploadFiles = createAsyncThunk('threads/uploadImages', async(files: File[], thunkAPI) => {
-  let ret : any[] = [];
-
   for (var file in files) {
     readBlob(files[file], 1024 * 1000 * 10)
   }
@@ -109,13 +99,20 @@ export const threadSlice = createSlice({
   }
 })
 
-export const selectThreadNumber = (state: ThreadState) => state.threadNumber;
-export const selectThreadViewerOpen = (state: ThreadState) => state.threadViewerOpen;
-export const selectUploadedFiles = (state: ThreadState) => state.uploadedFiles;
-export const selectUploadingFiles = (state: ThreadState) => state.uploadingFiles;
-export const selectNewThreadOpen = (state: ThreadState) => state.newThreadOpen;
+export const selectThreadNumber = (state: any) => state.thread.threadNumber;
+export const selectThreadViewerOpen = (state: any) => state.thread.threadViewerOpen;
+export const selectUploadedFiles = (state: any) => state.thread.uploadedFiles;
+export const selectUploadingFiles = (state: any) => state.thread.uploadingFiles;
+export const selectNewThreadOpen = (state: any) => state.thread.newThreadOpen;
 export const selectUploadStatus = (state: any) => state.thread.uploadStatus;
 
-export const { setThreadNumber, openThread, closeThread, closeNewThread, newThread, uploadImages } = threadSlice.actions
+export const { 
+  setThreadNumber, 
+  openThread, 
+  closeThread, 
+  closeNewThread, 
+  newThread, 
+  uploadImages 
+} = threadSlice.actions
 
 export default threadSlice.reducer

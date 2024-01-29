@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useReducer } from 'react'
+import React, { useReducer } from 'react'
 
 import Image from 'next/image'
 import ImageList from '@mui/material/ImageList';
@@ -11,7 +11,8 @@ import { useDispatch, useSelector, connect } from 'react-redux';
 import {
   setThreadNumber,
   openThread,
-  ThreadState
+  selectThreadViewerOpen,
+  selectThreadNumber
 } from './threadSlice'
 import { mapStateToProps } from './threadContainer'
 import '@fontsource/roboto/300.css';
@@ -21,8 +22,8 @@ import '@fontsource/roboto/700.css';
 
 const ThreadGallery = () => {
   const dispatch = useDispatch()
-  const visible = useSelector((state: any) => state.thread.threadViewerOpen)
-  const focusedThread = useSelector((state: any) => state.thread.threadNumber)
+  const visible = useSelector(selectThreadViewerOpen)
+  const focusedThread = useSelector(selectThreadNumber)
   const [, forceUpdate] = useReducer(x => x + 1, 0);
 
     return (

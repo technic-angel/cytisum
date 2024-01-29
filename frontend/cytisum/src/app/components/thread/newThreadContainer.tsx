@@ -6,13 +6,14 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { FormControl, InputLabel, TextField, Stack } from '@mui/material';
+import { FormControl, TextField } from '@mui/material';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { 
     ThreadState,
     closeNewThread,
     useUploadFiles,
-    selectUploadStatus
+    selectUploadStatus,
+    selectNewThreadOpen
  } from './threadSlice';
 
 const mapDispatchToProps = (dispatch: any) => {
@@ -38,7 +39,7 @@ const NewThreadContainer = (props: any) => {
 
 
     const dispatch = useDispatch();
-    const visible = useSelector((state: any) => state.thread.newThreadOpen);
+    const visible = useSelector(selectNewThreadOpen);
     const statusMsg = useSelector(selectUploadStatus)
     const fields = useSelector((state: any) => state.thread)
     const [, forceUpdate] = useReducer(x => x + 1, 0);
@@ -69,7 +70,6 @@ const NewThreadContainer = (props: any) => {
                                     for (var file = 0; file != event.target.files?.length; file++) {
                                         arr.push(event.target.files!.item(file)!)
                                     }
-                                    console.log(arr);
                                     if (arr.length > 0) 
                                         props.UploadClick(arr);
                                     forceUpdate();

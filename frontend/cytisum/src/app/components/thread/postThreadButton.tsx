@@ -6,7 +6,6 @@ import {
 } from './threadSlice'
 import { connect, useDispatch } from "react-redux"
 import { useReducer } from "react"
-import { useSelector } from "react-redux"
 
 function mapStateToProps(state : ThreadState) {
     const s = state;

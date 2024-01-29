@@ -9,6 +9,8 @@ import { connect, useDispatch, useSelector } from 'react-redux';
 import { 
     ThreadState,
     closeThread,
+    selectThreadNumber,
+    selectThreadViewerOpen
  } from './threadSlice';
 
  import threads from '../../placeholder_data/placeholder_data'
@@ -28,14 +30,17 @@ const ThreadContainer = () => {
     };
 
     const dispatch = useDispatch();
-    const threadNumber = useSelector((state: any) => state.thread.threadNumber);
-    const visible = useSelector((state: any) => state.thread.threadViewerOpen);
+    const threadNumber = useSelector(selectThreadNumber);
+    const visible = useSelector(selectThreadViewerOpen);
     const [, forceUpdate] = useReducer(x => x + 1, 0);
+
+    //todo: replace below logic with getPostById
     const post = threads.threads.find((thread) => thread.number == threadNumber);
     if (post === undefined) {
         dispatch(closeThread());
         return (null);
     }
+
     return (
         <div suppressHydrationWarning>
             <Modal
