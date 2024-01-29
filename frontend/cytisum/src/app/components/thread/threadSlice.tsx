@@ -7,7 +7,8 @@ export interface ThreadState {
     threadNumber: number,
     newThreadOpen: boolean,
     uploadedFiles: File[],
-    uploadingFiles: File[]
+    uploadingFiles: File[],
+    uploadStatus: String
 }
 
 export const initialState : ThreadState = {
@@ -15,7 +16,8 @@ export const initialState : ThreadState = {
     threadNumber: -1,
     newThreadOpen: false,
     uploadedFiles: [],
-    uploadingFiles: []
+    uploadingFiles: [],
+    uploadStatus: "No files selected."
 }
 
 const generateUniqueUploadId = () => {
@@ -31,7 +33,6 @@ const readBlob = (file: File, chunkSize: number) => {
     chunkUpload(file, i, chunkSize, upload, fileSize)
   }
 
-  console.log("Chunk Finish");
 }
 
 const chunkUpload = (file: File, index: number, chunkSize: number, upload: any, totalFileSize: number) => {
@@ -40,8 +41,6 @@ const chunkUpload = (file: File, index: number, chunkSize: number, upload: any, 
   const start = index * chunkSize;
   const stop = start + chunkSize < totalFileSize ? start + chunkSize : totalFileSize;
   const blob = file.slice(start, stop);
-  console.log(typeof(blob));
-  console.log(blob);
   upload(blob, start, stop - 1, totalFileSize);
 }
 
@@ -92,20 +91,20 @@ export const threadSlice = createSlice({
     setThreadNumber: (state: ThreadState, action) => { state.threadNumber = action.payload; },
     openThread: (state: ThreadState) => { state.threadViewerOpen = true; },
     closeThread: (state: ThreadState) => { state.threadViewerOpen = false; },
-    newThread: (state: ThreadState) => { state.newThreadOpen = true; console.log("YOOOO"); },
+    newThread: (state: ThreadState) => { state.newThreadOpen = true; },
     postThread: (state: ThreadState, action) => { },
     closeNewThread: (state: ThreadState) => { state.newThreadOpen = false; },
-    uploadImages: (state: ThreadState) => { useUploadFiles(state.uploadingFiles); console.log("fuck") }
+    uploadImages: (state: ThreadState) => { useUploadFiles(state.uploadingFiles); }
   },
   extraReducers: (builder) => {
     builder.addCase(useUploadFiles.fulfilled, (state, action) => {
-      console.log(action.payload)
+      state.uploadStatus = "Successfully uploaded " + state.uploadedFiles.length + " files."
     }),
     builder.addCase(useUploadFiles.rejected, (state, action) => {
-      console.log("FAILED")
+      state.uploadStatus = "File upload failed."
     }),
     builder.addCase(useUploadFiles.pending, (state, action) => {
-      console.log("UPLOADING...")
+      state.uploadStatus = "Uploading " + state.uploadingFiles.length + " files..."
     })
   }
 })
@@ -115,6 +114,7 @@ export const selectThreadViewerOpen = (state: ThreadState) => state.threadViewer
 export const selectUploadedFiles = (state: ThreadState) => state.uploadedFiles;
 export const selectUploadingFiles = (state: ThreadState) => state.uploadingFiles;
 export const selectNewThreadOpen = (state: ThreadState) => state.newThreadOpen;
+export const selectUploadStatus = (state: any) => state.thread.uploadStatus;
 
 export const { setThreadNumber, openThread, closeThread, closeNewThread, newThread, uploadImages } = threadSlice.actions
 
