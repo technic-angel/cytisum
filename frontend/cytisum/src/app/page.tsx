@@ -8,6 +8,8 @@ import ThreadGallery from './components/thread/threadGallery';
 import { Provider } from 'react-redux';
 import store from './store';
 import ThreadContainer from './components/thread/threadContainer';
+import PostThreadButton from './components/thread/postThreadButton'
+import NewThreadContainer from './components/thread/newThreadContainer';
 
 export default function Home() {
   return (
@@ -22,6 +24,8 @@ export default function Home() {
           <ThreadGallery />
         </Container>
         <ThreadContainer />
+        <PostThreadButton />
+        <NewThreadContainer />
       </main>
     </Provider>
   )

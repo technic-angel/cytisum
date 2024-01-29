@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("DB_HOST")
 }
 
 model Post {
@@ -41,4 +41,8 @@ model User {
   admin         Boolean   @default(false)
   posts         Int       @default(0)
   flags         String[]
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> fd6a45bf94b16fcc39b90f40afa40a4925c1fdaf

@@ -25,21 +25,19 @@ const ThreadContainer = () => {
         border: '2px solid #000',
         boxShadow: 15,
         p: 4,
-      };
+    };
 
     const dispatch = useDispatch();
     const threadNumber = useSelector((state: any) => state.thread.threadNumber);
-    const visible = useSelector((state: any) => state.thread.open);
+    const visible = useSelector((state: any) => state.thread.threadViewerOpen);
     const [, forceUpdate] = useReducer(x => x + 1, 0);
     const post = threads.threads.find((thread) => thread.number == threadNumber);
     if (post === undefined) {
         dispatch(closeThread());
-        console.log("Could not find post " + threadNumber);
         return (null);
     }
-    console.log(visible)
     return (
-        <div>
+        <div suppressHydrationWarning>
             <Modal
                 open={visible}
                 onClose={ () => {
@@ -65,8 +63,11 @@ const ThreadContainer = () => {
 export function mapStateToProps(state : ThreadState) {
     const s = state;
     return {
-        open: s.open,
-        threadNumber: s.threadNumber
+        newThreadOpen: s.newThreadOpen,
+        threadNumber: s.threadNumber,
+        threadViewerOpen: s.threadViewerOpen,
+        uploadingFiles: s.uploadingFiles,
+        uploadedFiles: s.uploadedFiles
     }
 }
 
