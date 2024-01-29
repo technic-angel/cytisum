@@ -1,27 +1,29 @@
-import { Authorized, JsonController, Get } from 'routing-controllers';
-import { PostService }  from '../services/postService'
+// import { Authorized, JsonController, Get, Post, HttpCode } from 'routing-controllers';
+// import { PostService }  from '../services/postService'
 
-@JsonController('/post')
-export class exampleController {
+// @JsonController('/post')
+// export class exampleController {
 
-    private postService: PostService;
+//     private postService: PostService;
 
-    constructor(){
-        this.postService = new PostService
-    }
+//     constructor(){
+//         this.postService = new PostService
+//     }
 
-    @Get('/getall')
-    publicExample(){
-        console.log('hit this end point')
-        const tester = this.postService.getAllPosts()
-        console.log(tester)
-        return tester
-    }
+//     @Get('/getall')
+//     publicExample(){
+//         console.log('hit this end point')
+//         const tester = this.postService.getAllPosts()
+//         console.log(tester)
+//         return tester
+//     }
 
-    @Get(`/newpost`)
-    testCreate(){
-        console.log('Going to make an entry into table')
-        this.postService.createNewPost()
-    }
+//     @HttpCode(200)
+//     @Post(`/newpost`)
+//     async testCreate(){
+//         console.log('Going to make an entry into table')
+//         const newpost = this.postService.createNewPost()
+//         return newpost
+//     }
 
-}
+// }
