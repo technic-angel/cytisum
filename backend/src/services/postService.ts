@@ -15,7 +15,7 @@ export class PostService {
 
     async createNewPost(post: any): Promise<any>{
         //time stamp is too small
-        
+
         try{
             const newPost = await this.prisma.post.create({
                 data:{
@@ -23,7 +23,7 @@ export class PostService {
                     name: post.name !== "" ? post.name : "Anonymous",
                     subject: post.subject !== "" ? post.subject : null,
                     comment: post.comment,
-                    timestamp: 12,
+                    timestamp: Math.floor(Date.now() / 1000),
                     board: 'random'
                 }
             })
