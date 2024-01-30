@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useReducer } from 'react'
+import React, { useEffect, useReducer, useState } from 'react'
 
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -14,6 +14,8 @@ import {
  } from './threadSlice';
 
  import threads from '../../placeholder_data/placeholder_data'
+
+ import ThreadCommentContainer from './threadCommentContainer';
 
 const ThreadContainer = () => {
     const style = {
@@ -41,6 +43,21 @@ const ThreadContainer = () => {
         return (null);
     }
 
+    // const [dataObj, setDataObj] = useState<any>({})
+
+    // useEffect(() => {
+    //     fetch("http://localhost:3001/post/getallpost").then(
+    //         response =>
+    //         response.json()
+    //     ).then(
+    //         (data: any) => {
+            
+    //             console.log(data)
+    //             setDataObj(data)
+    //         }
+    //     )
+    // }, []);
+
     return (
         <div suppressHydrationWarning>
             <Modal
@@ -53,6 +70,7 @@ const ThreadContainer = () => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
+                    <ThreadCommentContainer />
                     <Typography id="modal-modal-title" variant="h6" component="h2">
                         {post.subject}
                     </Typography>
@@ -61,6 +79,7 @@ const ThreadContainer = () => {
                     </Typography>
             </Box>
             </Modal>
+            
         </div>
         )
 }
